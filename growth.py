@@ -94,6 +94,25 @@ st.markdown("""
         border-radius: 15px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
+      .stTextInput input, .stTextArea textarea {
+        background-color: #ffffff; /* White background for contrast */
+        color: #333; /* Dark text for better visibility */
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        padding: 15px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .stTextInput input::placeholder, .stTextArea textarea::placeholder {
+        color: #999; /* Lighter text for placeholders */
+    }
+
+    .stTextInput input:focus, .stTextArea textarea:focus {
+        border-color: #4CAF50;
+        box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        background-color: #fdfdfd; /* Slightly brighter background when focused */
+    }
     </style>
 """, unsafe_allow_html=True)
 
