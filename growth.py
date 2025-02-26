@@ -9,7 +9,6 @@ import plotly.express as px # type: ignore
 # File to store user data
 DATA_FILE = "user_journal.json"
 
-# Configure page settings
 st.set_page_config(
     page_title="Growth Mindset Journal",
     page_icon="🚀",
@@ -17,7 +16,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Enhanced UI Styling
 st.markdown("""
     <style>
     /* Main container styling */
@@ -99,7 +97,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Load and save functions
 def load_data():
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE, "r") as file:
@@ -110,28 +107,22 @@ def save_data(data):
     with open(DATA_FILE, "w") as file:
         json.dump(data, file, indent=4)
 
-# Load journal entries
 user_data = load_data()
 
-# Create columns for layout
 col1, col2, col3 = st.columns([1, 2, 1])
 
 with col2:
-    # App Header
     st.markdown("<h1 style='text-align: center;'>🚀 Growth Mindset Journal</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; font-size: 1.2em;'>Your Daily Self-Growth Companion</p>", unsafe_allow_html=True)
     
-    # User welcome section
     with st.container():
         username = st.text_input("", placeholder="Enter your name...", key="username")
         if username:
             st.markdown(f"<h3 style='text-align: center;'>👋 Welcome, {username}!</h3>", unsafe_allow_html=True)
 
-    # Today's date
     today = datetime.date.today().strftime("%Y-%m-%d")
     st.markdown(f"<p style='text-align: center; color: #666;'>{today}</p>", unsafe_allow_html=True)
 
-    # Mood Selection
     st.markdown("### How are you feeling today? 🌟")
     mood_cols = st.columns(3)
     with mood_cols[0]:
@@ -143,7 +134,6 @@ with col2:
     
     mood = "😊 Happy" if happy else "😐 Neutral" if neutral else "😞 Sad" if sad else None
 
-    # Daily Reflection
     with st.container():
         st.markdown("### Daily Reflection ✍️")
         reflection = st.text_area(
@@ -152,7 +142,6 @@ with col2:
             placeholder="Share your thoughts and learnings..."
         )
 
-    # Goal Setting
     st.markdown("### Tomorrow's Goal 🎯")
     goal = st.text_input("", placeholder="Set one goal for self-improvement...")
 
@@ -165,7 +154,6 @@ with col2:
         st.balloons()
         st.success("🎉 Amazing progress! Keep up the great work!")
 
-    # Save Entry
     if st.button("Save Today's Entry 📌", key="save"):
         if username:
             if username not in user_data:
@@ -181,12 +169,10 @@ with col2:
         else:
             st.warning("⚠️ Please enter your name first")
 
-    # Past Reflections
     if username and username in user_data:
         st.markdown("---")
         st.markdown("### Your Journey So Far 📅")
         
-        # Create tabs for different views
         tab1, tab2 = st.tabs(["📝 Entries", "📊 Analytics"])
         
         with tab1:
@@ -197,11 +183,9 @@ with col2:
                     st.progress(entry['progress'] / 100)
         
         with tab2:
-            # Create mood analysis
             moods = [entry['mood'] for entry in user_data[username].values()]
             mood_counts = {mood: moods.count(mood) for mood in set(moods)}
             
-            # Create a pie chart
             fig = px.pie(
                 values=list(mood_counts.values()),
                 names=list(mood_counts.keys()),
@@ -210,7 +194,6 @@ with col2:
             )
             st.plotly_chart(fig)
 
-# Motivational quote footer
 st.markdown("---")
 st.markdown(
     "<p style='text-align: center; font-style: italic; color: #666;'>"
